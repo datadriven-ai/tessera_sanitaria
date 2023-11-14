@@ -1,0 +1,16 @@
+<div fxLayoutAlign="space-between center">
+  <h3 mat-dialog-title class="title-color">Associa Dottori</h3>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content fxLayoutAlign="start center" class="pt5">
+  <mat-form-field class="full-width" appearance="outline">
+    <mat-label>Dottori</mat-label>
+    <mat-select multiple [disabled]="isLoading" [formControl]="formControl">
+      <mat-option *ngFor="let m of medics" [value]="m.userId">{{m.surname}} {{m.name}}</mat-option>
+    </mat-select>
+    <mat-spinner matSuffix *ngIf="isLoading" diameter="20"></mat-spinner>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" class="full-width" [disabled]="formControl.invalid" [mat-dialog-close]="formControl.value">Conferma</button>
+</mat-dialog-actions>

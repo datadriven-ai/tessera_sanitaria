@@ -1,0 +1,44 @@
+#toolbar {
+  border-radius: 0 0 32px 32px;
+  height: 80px;
+  padding: 24px;
+  background-image: url("/assets/images/texture.png");
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: 95%;
+  background-color: #09102b;
+  color: white;
+}
+
+#toolbar img {
+  height: 50px;
+}
+
+hpb-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+mat-drawer-container {
+  background-color: unset;
+  height: calc(100% - 80px);
+}
+
+.drawer-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  width: 32px;
+  z-index: 2;
+  height: calc(100% - 100px);
+  border-radius: 24px 0 0 24px;
+}
+
+.drawer-zone button {
+  margin: 0;
+  padding: 0;
+  min-width: 32px;
+}

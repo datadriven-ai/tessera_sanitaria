@@ -1,0 +1,23 @@
+mat-dialog-content {
+  width: 600px;
+  height: 500px;
+  max-height: unset;
+}
+
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+  right: -23px;
+}
+
+h4 {
+  margin: 0;
+}
+
+textarea {
+  resize: unset;
+}
+
+ul {
+  margin-top: 0;
+  list-style: none;
+  padding-left: 0;
+}

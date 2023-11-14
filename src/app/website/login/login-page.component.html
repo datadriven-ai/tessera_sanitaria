@@ -1,0 +1,23 @@
+<div class="full-size" fxLayoutAlign="center center" fxLayout="column">
+  <span fxFlex></span>
+    <mat-card id="login" fxLayout="row">
+      <div fxFlex="47" class="left-card-section" fxLayout="column" fxLayoutGap="16px">
+        <img src="assets/images/titleLogoDark.png" alt="logo" class="mdh-logo">
+        <span fxFlex></span>
+        <h3 class="darkText">Benvenuto!</h3>
+        <span>Accedi alla tua area riservata per prenotare prestazioni, creare codici promozionali, gestire le convenzioni e molto altro.</span>
+        <span>Per informazioni e assistenza contattaci al numero 0640411457 (attivo dal lunedì al venerdì dalle 9:00 alle 18:00) o scrivici a <a
+          href="mailto:info@healthpointitalia.com">info@healthpointitalia.com</a></span>
+      </div>
+      <div fxFlex class="right-card-section">
+        <mat-card-title class="primary-color">Accedi</mat-card-title>
+        <mat-card-content fxLayoutAlign="center start" fxLayout="column">
+          <span fxFlexOffset="12px">Effettua la login con le tue credenziali.</span>
+        </mat-card-content>
+        <mat-card-actions fxLayoutAlign="center" fxLayout="column" fxLayoutGap="32px">
+          <button mat-flat-button color="primary" id="signinButton" (click)="login()" [disabled]="disableLogin | async"  fxFlexOffset="8px"><i>Accedi</i></button>
+        </mat-card-actions>
+      </div>
+    </mat-card>
+  <span fxFlex></span>
+</div>

@@ -1,0 +1,43 @@
+.user-card {
+  width: 300px;
+  height: 140px;
+  margin: 8px;
+}
+
+button {
+  margin-top: -32px;
+  margin-right: 16px;
+}
+
+.conventionLabel {
+  position: absolute;
+  right: 14px;
+  top: 8px;
+  font-size: 14px;
+}
+
+h5 {
+  margin-top: 8px;
+}
+
+small mat-icon {
+  font-size: 12px;
+  line-height: 14px;
+  width: 14px;
+  height: 14px;
+}
+
+.overflow {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 242px;
+}
+
+.specializationsLabel {
+  cursor: default;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 242px;
+  max-height: 20px;
+  white-space: nowrap;
+}

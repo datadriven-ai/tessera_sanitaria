@@ -1,0 +1,26 @@
+mat-card {
+  width: 180px;
+  height: 64px;
+  margin-bottom: 42px;
+  padding: 16px 24px;
+}
+
+button.mat-mini-fab {
+  margin-top: -64px;
+  margin-right: 12px;
+}
+
+h3{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+  height: 1.2em;
+  white-space: nowrap;
+}
+.cut-text{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 90px;
+  height: 1.4em;
+  white-space: nowrap;
+}

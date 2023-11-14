@@ -1,0 +1,27 @@
+<div id="footer" fxLayoutGap="8px" fxLayout="row">
+  <div fxFlex.gt-lg="650px" fxFlex.lt-xl="400px" fxFlexOffset="16px" fxLayoutAlign="space-around center" fxLayoutGap="16px" fxHide.lt-md>
+    <img src="/assets/images/titleLogo.png">
+    <span class="footer-copyright" fxHide.lt-xl>©2018 Health Point S.p.A. è parte del Gruppo Health Italia Spa.
+            Società quotata al mercato AiMitalia codice ISIN IT0005221004</span>
+    <div fxLayout="row" fxLayoutAlign="end end"  fxLayoutGap="9px">
+      <img class="footerImageLogo" src="assets/images/logoHealthItalia.png">
+      <img class="footerLogoAim" src="assets/images/logoAim.png">
+    </div>
+  </div>
+  <mat-divider vertical fxHide.lt-md></mat-divider>
+  <div fxFlex fxLayoutAlign="center center" class="footer-item">
+    <span fxHide.lt-md>Controlla la </span> <span class="footerLink ml5"> Privacy Policy </span>
+  </div>
+  <mat-divider vertical></mat-divider>
+  <div fxFlex fxLayoutAlign="center center" class="footer-item footerLink">
+    <span fxHide.lt-md>I nostri </span> <span class="ml5">indirizzi</span>
+
+    <mat-icon (click)="openAddressModal($event)">arrow_drop_up</mat-icon>
+  </div>
+  <mat-divider vertical></mat-divider>
+  <div fxFlex fxLayoutAlign="center center" class="footer-item footerLink" >
+    <span>Contatti </span> <span fxHide.lt-md class="ml5"> per assistenza</span>
+    <mat-icon (click)="openContactModal($event)">arrow_drop_up</mat-icon>
+  </div>
+  <div fxFlex="16px"></div>
+</div>

@@ -1,0 +1,65 @@
+@import "./app/core/styles/material";
+@import "./app/core/styles/utils.css";
+@import "~ng-pick-datetime/assets/style/picker.min.css";
+
+html,body {height: 100%; width: 100%;}
+body {margin: 0; background-color: #F6F4EC;}
+
+.grow-animation {
+  cursor: pointer;
+  transition: transform .2s;
+}
+
+.grow-animation:hover {
+  transform: scale(1.05);
+}
+
+.red-line {
+  height: 3px;
+  background-color: darkred;
+  border-radius: 8px;
+}
+
+
+.card-container {
+  padding: 16px 2%;
+  max-width: 1550px;
+  overflow-y: auto;
+}
+
+mat-paginator {
+  margin-right: 4%;
+}
+
+h1.mt24 {
+  margin-top: 24px !important;
+}
+
+.reservation-modal {
+  height: 850px;
+  width: 850px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.red-line.upper {
+  margin-top: 48px;
+}
+
+.border {
+  border: 1px solid #80808042;
+}
+
+.textOverflow {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

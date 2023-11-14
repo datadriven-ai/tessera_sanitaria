@@ -1,0 +1,191 @@
+@import "./src/app/core/styles/theme";
+
+
+.mat-snack-bar-container {
+  border-radius: 30px;
+  background: $primary-color;
+
+  .mat-button {
+    color: $accent-color;
+  }
+}
+
+
+mat-card.mat-card {
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: unset !important;
+  border: 1px solid #80808042;
+  .mat-card-title {
+    font-size: 20px;
+    margin: 0;
+
+    .mat-icon-button {
+      margin-top: -8px;
+    }
+  }
+  .mat-card-actions {
+    margin-bottom: 0;
+  }
+}
+
+mat-card.cardHover {
+  background-color: $primary-color;
+  color: white;
+}
+
+button.mat-flat-button:hover {
+  background-color: $primary-color;
+  color: white;
+}
+
+
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: $accent-color;
+}
+
+.snackBar {
+  border-radius: 16px;
+}
+
+button.mat-stroked-button,
+button.mat-flat-button {
+  border-radius: 16px;
+}
+
+mat-icon:hover {
+  cursor: pointer;
+}
+
+input.mat-input-element {
+  caret-color: black;
+}
+
+.mat-card mat-divider.mat-divider-horizontal {
+  left: 3%;
+  width: 94%;
+}
+
+mat-dialog-container.mat-dialog-container {
+  border-radius: 32px;
+  position: relative;
+  overflow: visible;
+}
+
+mat-dialog-actions.mat-dialog-actions {
+  margin-bottom: 0;
+}
+
+.base-modal {
+  height: 600px;
+  width: 850px;
+}
+
+
+mat-form-field.form-no-margin .mat-form-field-wrapper {
+  margin: 0;
+  padding-bottom: 0;
+}
+
+mat-form-field.form-no-margin .mat-form-field-infix {
+  padding: 8px 0 8px 0;
+}
+
+mat-form-field.form-no-margin .mat-form-field-label-wrapper {
+  top: -18px;
+}
+
+mat-form-field.whiteBg .mat-form-field-outline {
+  background-color: white;
+  border-radius: 8px;
+}
+
+mat-form-field.mat-form-field-appearance-outline .mat-form-field-prefix {
+  top: 0;
+}
+
+/* TAB */
+
+mat-tab-group:not(.regularTabGroup) .mat-tab-label {
+  font-size: 16px;
+  font-weight: normal;
+  min-width: 100px;
+}
+
+.mat-tab-label.mat-tab-label-active{
+  color: $primary-color;
+  opacity: 1;
+}
+
+mat-tab-group:not(.regularTabGroup) .mat-tab-header {
+  padding-left: 4%;
+}
+
+mat-tab-group .mat-ink-bar {
+  height: 10px;
+  border-radius: 8px;
+  bottom: -6px;
+}
+
+mat-tab-group .mat-tab-header,
+mat-tab-group .mat-tab-label-container {
+  overflow: visible;
+}
+
+.mat-tab-header {
+  border-bottom: 3px solid $primary-color;
+}
+
+mat-paginator.mat-paginator {
+  background: transparent;
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  right: 2%;
+}
+
+mat-tab-group.absoluteTab .mat-tab-body-wrapper {
+  position: absolute;
+  padding-top: 60px;
+  min-width: 95%;
+}
+
+.mat-list-base .mat-list-item {
+  font-size: 18px;
+}
+
+mat-list.mat-list-base .mat-list-item {
+  height: 43px;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content {
+  width: 100%;
+}
+
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+  right: -23px;
+}
+
+
+tr td.mat-calendar-body-label:not(.ng-star-inserted) {
+  display: none;
+}
+
+.mat-drawer {
+  background-color: unset;
+}
+
+.mat-drawer:not(.mat-drawer-side) {
+  box-shadow: unset;
+}
+
+.mat-checkbox-layout .mat-checkbox-label {
+  white-space: break-spaces;
+}
+
+
+.mat-tooltip {
+  white-space: pre-line;
+  font-size: 14px;
+}

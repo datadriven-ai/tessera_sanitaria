@@ -1,0 +1,95 @@
+<div fxLayoutAlign="space-between center">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 mat-dialog-title class="title-color">{{isNewUser ?  'Nuovo Utente' : 'Modifica Utente:' + ' ' + name + ' ' + surname }}</h3>
+  </div>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close [disabled]="isLoading"><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content fxLayout="column" [formGroup]="userForm" fxLayoutGap.lt-sm="8px" fxLayoutAlign="start center">
+
+  <mat-form-field appearance="outline" *ngIf="isNewUser" class="full-width">
+    <mat-label>Ruolo</mat-label>
+    <mat-select required formControlName="role" >
+      <mat-option *ngFor="let r of roles" [value]="r.role" (click)="checkLocationField(r)">{{r.role | translateRole | titlecase}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div fxLayoutGap="32px" fxLayout="row wrap" fxLayoutGap.lt-sm="0">
+    <mat-form-field *ngIf="isNewUser" appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field *ngIf="isNewUser" appearance="outline" >
+      <mat-label>Cognome</mat-label>
+      <input matInput formControlName="surname" required>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="32px" fxLayout="row wrap" fxLayoutGap.lt-sm="0">
+    <div fxLayoutAlign="space-between" fxFlex="355px" >
+      <mat-form-field *ngIf="isNewUser" appearance="outline" fxFlex="145px">
+        <mat-label>Sesso</mat-label>
+        <mat-select formControlName="gender" required>
+          <mat-option value="M">Maschio</mat-option>
+          <mat-option value="F">Femmina</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="isNewUser" appearance="outline" fxFlex="190px">
+        <mat-label>Data di Nascita</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthDate"  [max]="maxDate" readonly class="pointer" (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-form-field *ngIf="isNewUser" appearance="outline">
+      <mat-label>Città di Nascita</mat-label>
+      <input matInput type="text" formControlName="birthPlace" [matAutocomplete]="auto" required>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let item of filteredCities$ | async" [value]="item.city">
+          {{item.city}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="32px" fxLayoutGap.lt-sm="8px">
+    <mat-form-field *ngIf="isNewUser" appearance="outline">
+      <mat-label>Codice Fiscale</mat-label>
+      <input matInput  formControlName="fiscalCode">
+      <button class="primary-color"
+              mat-stroked-button matSuffix
+              id='calculateButton'
+              type="button"
+              (click)="$event.stopImmediatePropagation(); calculateFiscalCode()">calcola</button>
+    </mat-form-field>
+    <mat-form-field *ngIf="isNewUser" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput  formControlName="email" required>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="32px" fxLayout="row wrap" fxLayoutGap.lt-sm="0">
+
+    <div fxLayoutAlign="space-between" fxFlex="355px">
+      <mat-form-field appearance="outline" fxFlex="145px">
+        <mat-label>Prefisso</mat-label>
+        <mat-select formControlName="phonePrefix" placeholder="+39">
+          <mat-option *ngFor="let country of phonePrefixes$ | async" [value]="country.dial_code">
+            {{ country.name }} ({{ country.dial_code }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="185px">
+        <mat-label>Numero di Telefono</mat-label>
+        <input type="number" matInput formControlName="phoneNumber" required>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" *ngIf="showLocation && isNewUser">
+      <mat-label>Station</mat-label>
+      <mat-select multiple formControlName="locationIds" required>
+        <mat-option *ngFor="let l of locations" [value]="l.id">{{l.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end">
+  <button mat-flat-button color="primary" [disabled]="userForm.invalid || isLoading" (click)="createUser()">
+    <ng-container *ngIf="isLoading"> <mat-spinner color="accent" [diameter]="25"></mat-spinner></ng-container>
+    <ng-container *ngIf="!isLoading">  {{isNewUser ? 'Crea' : 'Modifica'}}</ng-container>
+  </button>
+</mat-dialog-actions>

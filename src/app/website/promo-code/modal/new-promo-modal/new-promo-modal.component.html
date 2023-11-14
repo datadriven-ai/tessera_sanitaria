@@ -1,0 +1,113 @@
+
+<mat-dialog-content fxLayoutGap="32px" [formGroup]="form">
+  <div fxFlex="40" fxLayout="column">
+    <h3 mat-dialog-title class="title-color">{{(isEditing ? 'Modifica' : 'Nuovo') + ' codice sconto'}}</h3>
+    <div fxLayoutGap="16px">
+      <div fxLayoutAlign="center center" fxLayoutGap="8px" fxFlex>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Tipo codice{{isActive}}</mat-label>
+          <mat-select [disabled]="!isActive && isEditing" formControlName="type" (selectionChange)="setMaxValidity($event.value)">
+            <mat-option value="PROMO">Codice Promozionale</mat-option>
+            <mat-option value="COUPON">Coupon</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field appearance="outline" fxFlex="25" *ngIf="isPromo">
+        <mat-label>N° Utilizzi</mat-label>
+        <input [readonly]="!isActive && isEditing" matInput type="number" min="1" formControlName="maxValidity">
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Convenzione</mat-label>
+      <mat-select [disabled]="!isActive && isEditing" multiple [compareWith]="compareWithF" formControlName="partners">
+        <mat-option (click)="removeProduct($event)" [value]="partner" *ngFor="let partner of partners$ | async">{{partner.name | titlecase}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Descrizione</mat-label>
+      <input [readonly]="!isActive && isEditing" matInput formControlName="description">
+    </mat-form-field>
+    <div fxLayoutGap="16px">
+      <mat-form-field appearance="outline"  fxFlex="222px">
+        <mat-label>Inizio Validità</mat-label>
+        <input [disabled]="!isActive && isEditing" class="pointer"  matInput [matDatepicker]="picker" formControlName="startDate" [min]="minDate" readonly>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline"   fxFlex="222px">
+        <mat-label>Fine Validità</mat-label>
+        <input [disabled]="!isActive && isEditing" class="pointer" matInput formControlName="endDate" [matDatepicker]="pick" [min]="minDate" readonly >
+        <mat-datepicker-toggle matSuffix [for]="pick"></mat-datepicker-toggle>
+        <mat-datepicker #pick></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxLayoutGap="16px">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Tipo Sconto</mat-label>
+        <mat-select [disabled]="!isActive && isEditing" formControlName="valueType">
+          <mat-option value="PERCENTAGE">Percentuale</mat-option>
+          <mat-option value="AMOUNT">Valore</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Valore Sconto</mat-label>
+        <input [readonly]="!isActive && isEditing" matInput formControlName="amount" type="number" min="1">
+        <span matSuffix class="ml5">{{hasPercentageSelected ? ' %' : ' €'}}</span>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Codice Sconto</mat-label>
+      <input [readonly]="!isActive && isEditing" matInput formControlName="code">
+    </mat-form-field>
+    <mat-checkbox [disabled]="!isActive && isEditing" formControlName="cumulative" >Rendi cumulabile</mat-checkbox>
+  </div>
+  <div fxFlex class="relative">
+    <div class="partnerPicker" >
+      <mat-form-field *ngIf="selectedAgreements.length > 1">
+        <mat-label>Convenzione</mat-label>
+        <mat-select [disabled]="selectedAgreements.length <= 1" (valueChange)="loadProducts($event)" [(value)]="channelsSelected">
+          <mat-option *ngFor="let partner of selectedAgreements" [value]="partner.channelId">{{partner.name | titlecase}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button id="closeDialogButton" mat-dialog-close matTooltip="Chiudi" class="ml5"><mat-icon>clear</mat-icon></button>
+    </div>
+    <mat-tab-group class="regularTabGroup" animationDuration="0">
+      <mat-tab label="Prodotti Associabili">
+        <hpb-products-selection
+          [isActive]="!isActive && isEditing"
+          [isCatalog]="false"
+          [isLoading]="isLoading$ | async"
+          [catalog]="catalog$ | async"
+          [(selectionModel)]="selectionModel"
+          (productSelected)="productChecked($event)"
+          *ngIf="hasAgreement"></hpb-products-selection>
+        <p class="primary-color centerText" *ngIf="!hasAgreement">Selezionare una convenzione.</p>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="{{discountedProducts.length}}"> Prodotti Selezionati</span>
+        </ng-template>
+        <div class="item-area">
+          <p class="primary-color centerText" *ngIf="discountedProducts.length == 0">Nessun prodotto selezionato.</p>
+          <mat-list class="item-list">
+            <mat-list-item *ngFor="let prods of discountedProducts" class="full-width" fxLayoutAlign="start center" >
+              <div fxLayout="row" class="full-width" fxLayoutAlign="space-between center">
+                <span fxFlex>{{prods.categoryDescription | titlecase}}: {{prods.name}}</span>
+                <span fxFlex="15">{{prods.visitInfo?.duration ? prods.visitInfo.duration + 'min' : '' }}</span>
+                <div fxFlex="18" fxLayoutGap="3px">
+                  <span><strong> €{{prods.discountPrice < 0  ?  (0 |number:"1.2") : prods.discountPrice  | number:"1.2"}}</strong></span>
+                  <span class="darkLightText"><s>{{ prods.price  < 0 ? (0 |number:"1.2") : prods.price |number:"1.2" }}</s></span>
+                </div>
+              </div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end">
+  <button mat-flat-button color="primary" [disabled]="form.invalid || !selectionModel.hasValue() || !isActive && isEditing" (click)="save()">
+    {{isEditing ? 'Modifica' : 'Crea'}}
+  </button>
+</mat-dialog-actions>

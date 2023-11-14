@@ -1,0 +1,25 @@
+mat-dialog-content {
+  overflow: hidden;
+  max-height: 380px;
+}
+
+.doctor-icon-placeholder {
+  width: 100%;
+  height: 300px;
+  background-color: #f2f2f2;
+}
+
+.doctor-icon {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+.content{
+  width:100%;
+  overflow-y: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}

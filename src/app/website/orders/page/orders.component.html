@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" class="relative">
+  <span fxFlex class="red-line"></span>
+  <mat-form-field appearance="outline" id="searchBar" class="whiteBg form-no-margin" fxFlex="300px">
+    <mat-label>Cerca</mat-label>
+    <input matInput [formControl]="searchControl">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <span fxFlex="2"></span>
+</div>
+<div fxLayoutAlign="center center" *ngIf="isLoading$ | async; else orders" class="full-width">
+  <mat-spinner diameter="45"></mat-spinner>
+</div>
+<ng-template #orders>
+  <p class="centerText primary-color" *ngIf="!(hasEntity$ | async)">Non ci sono ordini.</p>
+  <div fxLayout="row wrap" fxLayoutGap="12px" class="card-container">
+    <hpb-order-card *ngFor="let o of data$ | async"
+                    [order]="o"
+                    (generateInvoiceEvent)="openInvoiceModal(o)"></hpb-order-card>
+  </div>
+
+  <mat-paginator showFirstLastButtons
+                 *ngIf="pagination$ | async as p"
+                 [length]="p.totalElements"
+                 [pageIndex]="p.number"
+                 [pageSize]="10"
+                 (page)="updatePage($event)"></mat-paginator>
+</ng-template>
+
+
+

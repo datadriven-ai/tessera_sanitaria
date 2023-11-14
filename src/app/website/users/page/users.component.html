@@ -1,0 +1,42 @@
+<div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+
+  <mat-tab-group animationDuration="0ms" ngClass.lt-md="mobile"  fxFlex class="absoluteTab" (selectedIndexChange)="changeTab($event)">
+    <mat-tab [disabled]="isLoading$ | async" [label]="t[1] | translateRole"  *ngFor="let t of tabs" class="relative">
+      <div fxLayoutAlign="center center" *ngIf="isLoading$ | async; else res" class="full-width">
+        <mat-spinner diameter="45"></mat-spinner>
+      </div>
+      <ng-template #res>
+
+        <p class="centerText primary-color" *ngIf="!(hasEntity$ | async)">Non ci sono utenti.</p>
+        <div fxLayout="row wrap" fxLayoutGap="8px" class="card-container">
+          <hpb-user-card *ngFor="let u of data$ | async"
+                         [user]="u"
+                         (editClick)="openNewUserModal(u)"
+                         (deleteClick)="delete(u)"
+                         (changeInfo)="openSecretarySettings(u)"></hpb-user-card>
+        </div>
+
+      </ng-template>
+
+    </mat-tab>
+  </mat-tab-group>
+
+
+  <mat-paginator showFirstLastButtons
+                 *ngIf="pagination$ | async as p"
+                 [length]="p.totalElements"
+                 [pageSize]="12"
+                 [pageIndex]="p.number"
+                 (page)="updatePage($event)"></mat-paginator>
+
+ <button mat-flat-button color="primary" class="mt24" (click)="openNewUserModal()"><mat-icon>add</mat-icon>Nuovo utente</button>
+  <span fxFlex="2" class="red-line"></span>
+  <mat-form-field appearance="outline" id="searchBar" class="whiteBg form-no-margin mt24" fxFlex="300px">
+    <mat-label>Cerca</mat-label>
+    <input matInput [formControl]="searchControl">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <span fxFlex="3"></span>
+</div>
+
+

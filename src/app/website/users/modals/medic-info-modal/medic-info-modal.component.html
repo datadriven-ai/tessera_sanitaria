@@ -1,0 +1,137 @@
+<mat-progress-bar *ngIf="!isLoading" mode="indeterminate"></mat-progress-bar>
+<ng-container *ngIf="isLoading">
+  <div  fxLayoutAlign="space-between center">
+    <h3 class="primary-color" mat-dialog-title> Modifica Medico</h3>
+    <button mat-icon-button id="closeButton" mat-dialog-close><mat-icon>clear</mat-icon></button></div>
+  <mat-dialog-content style="margin-top: 32px" fxLayout="column" class="mt15 content" [formGroup]="form">
+    <div fxLayout="column" fxLayoutAlign="space-around start" >
+      <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+        <mat-form-field fxFlex="20" appearance="outline">
+          <mat-label>Sigla</mat-label>
+          <input placeholder="sigla" type="text" formControlName="professionTitle" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input placeholder="nome" type="text" formControlName="name" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Cognome</mat-label>
+          <input placeholder="cognome" type="text" formControlName="surname" matInput>
+        </mat-form-field>
+      </div>
+      <div class="full-width" fxLayout="column" fxLayoutAlign="start start">
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field fxFlex="20" appearance="outline">
+            <mat-label>Genere</mat-label>
+            <mat-select formControlName="gender" >
+              <mat-option [value]="'F'"> Femmina</mat-option>
+              <mat-option [value]="'M'"> Maschio</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Codice Fiscale</mat-label>
+            <input placeholder="codice fiscale" type="text" formControlName="fiscalCode" matInput>
+          </mat-form-field>
+        </div>
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field fxFlex="50" appearance="outline">
+            <mat-label>Indirizzo di residenza</mat-label>
+            <input placeholder="indirizzo di residenza" type="text" formControlName="address" matInput>
+          </mat-form-field>
+          <mat-form-field fxFlex="23" appearance="outline">
+            <mat-label>Città</mat-label>
+            <input placeholder="città" type="text"  [matAutocomplete]="auto"  formControlName="city" matInput>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let item of filteredCities$ | async" [value]="item.city">
+                {{item.city}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field fxFlex="25" appearance="outline">
+            <mat-label>ZIP Code</mat-label>
+            <input placeholder="cap" type="text" formControlName="cap" matInput>
+          </mat-form-field>
+        </div>
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field fxFlex="50" appearance="outline">
+            <mat-label>Telefono</mat-label>
+            <input placeholder="numero di telefono" type="text" formControlName="phoneNumber" matInput>
+          </mat-form-field>
+          <mat-form-field fxFlex="50" appearance="outline" fxFlex="auto">
+            <mat-label>Tipo di televisita</mat-label>
+            <mat-select multiple formControlName="visitType" >
+              <mat-option *ngFor="let b of visitType" [value]="b"> {{b}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <h3 class="primary-color">Carriera</h3>
+      <div class="full-width" fxFlex="auto" fxLayout="column">
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field appearance="outline">
+            <mat-label>Titolo di studio</mat-label>
+            <input placeholder="titolo di studio" type="text" formControlName="qualification" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Qualifica</mat-label>
+            <input placeholder="qualifica" type="text" formControlName="qualificationClassLevel" matInput>
+          </mat-form-field>
+        </div>
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field appearance="outline">
+            <mat-label>Albo</mat-label>
+            <input placeholder="" type="certificato" formControlName="nationalRegCertificate" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="full-width" >
+            <mat-label>Data Iscrizione Albo</mat-label>
+            <input
+              readonly
+              matInput
+              placeholder="data iscrizione"
+              autocomplete="off"
+              formControlName="nationalDtRegCertificate"
+              [matDatepicker]="picker">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field appearance="outline">
+            <mat-label>Certificazione</mat-label>
+            <input placeholder="" type="certificato" formControlName="nationalRegCertificateName" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Numero certificazione</mat-label>
+            <input placeholder="numero certificazione" type="text" formControlName="nationalRegCertificateCode" matInput>
+          </mat-form-field>
+        </div>
+        <div class="full-width" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="8px">
+          <mat-form-field appearance="outline" fxFlex="auto">
+            <mat-label>Branca</mat-label>
+            <mat-select multiple formControlName="specializations" [compareWith]="compareWithF">
+              <mat-option *ngFor="let b of allBranches" [value]="b.id"> {{b.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex>
+            <mat-label>Convenzione</mat-label>
+            <mat-select multiple formControlName="associatedChannel" [compareWith]="compareVisitType">
+              <mat-option [value]="partner" *ngFor="let partner of conventions">{{partner.name | titlecase}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <h3 class="primary-color">Account</h3>
+      <div class="full-width" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="16px">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input placeholder="email" type="text" formControlName="email" matInput required>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions class="mt10" fxLayoutAlign="end">
+    <div><button mat-flat-button color="primary" [disabled]="true" (click)="save()">Salva</button></div>
+  </mat-dialog-actions>
+</ng-container>
+

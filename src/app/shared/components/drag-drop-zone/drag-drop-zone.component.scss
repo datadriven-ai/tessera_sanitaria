@@ -1,0 +1,22 @@
+.uploadfilecontainer {
+  background-repeat: no-repeat;
+  background-size: 100px;
+  background-position: center;
+  height: 80px;
+  width: 90%;
+  margin: 8px auto;
+  border: 2px dashed lightgray;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.uploadfilecontainer:hover {
+  cursor: pointer;
+  background-color: darkgray !important;
+  opacity: 0.8;
+}
+
+p {
+  margin: 0;
+}

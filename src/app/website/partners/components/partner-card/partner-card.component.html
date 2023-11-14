@@ -1,0 +1,20 @@
+<div fxLayout="column" fxLayoutAlign="start end">
+  <mat-card *ngIf="partner">
+    <mat-card-content fxLayout="column" class="full-height" fxLayoutAlign="space-between start">
+      <div fxLayoutAlign="space-between center" class="full-width">
+        <h3 mat-card-title class="primary-color">{{partner.name | titlecase}}</h3>
+        <small class="darkLightText" style="font-size: 12px">{{partner.conventionCode}}</small>
+      </div>
+      <small class="darkLightText" *ngIf="partner.start" matTooltip="Validità convenzione">{{partner.start | date:'dd/MM/YY'}} - {{partner.end | date:'dd/MM/YY'}}</small>
+      </mat-card-content>
+  </mat-card>
+  <div fxLayoutAlign="end start" fxLayoutGap="12px">
+    <button mat-mini-fab color="primary" class="mat-elevation-z0 grow-animation" [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="editClicked.emit()"><mat-icon>edit</mat-icon><span>Modifica</span> </button>
+    <button mat-menu-item (click)="openCatalog.emit()"><mat-icon>list</mat-icon> <span>Visualizza Catalogo Prodotti</span></button>
+    <button mat-menu-item (click)="importClicked.emit()" *ngIf="canImport"><mat-icon>manage_accounts</mat-icon> <span>Importa dipendenti</span></button>
+  </mat-menu>
+</div>
+

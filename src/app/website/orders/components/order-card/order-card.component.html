@@ -1,0 +1,17 @@
+<div fxLayout="column" fxLayoutAlign="start end">
+  <mat-card class="order-card" fxLayout="column" *ngIf="order">
+    <div fxLayout="column" fxFlexOffset="8" mat-card-title>
+      <div fxLayoutAlign="space-between start" class="full-width">
+        <small class="darkLightText">{{order.creationDate}}</small>
+        <small>{{order.totalAmount | currency:'EUR'}}</small>
+      </div>
+      <h3 class="primary-color"> {{order.user.name}} <br> {{order.user.surname}}</h3>
+    </div>
+    <mat-card-content fxLayout="column">
+      <small> {{order.products?.length}}  {{order.products?.length == 1 ? 'Prestazione' : 'Prestazioni'}}</small>
+    </mat-card-content>
+  </mat-card>
+  <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button mat-flat-button color="primary" class="mat-elevation-z0 grow-animation" (click)="generateInvoiceEvent.emit()">Emetti fattura</button>
+  </div>
+</div>

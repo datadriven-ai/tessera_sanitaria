@@ -1,0 +1,20 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h3 class="primary-color">Importa dipendenti</h3>
+  <button mat-icon-button mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="16px">
+  <span class="darkLightText">Puoi utilizzare questa sezione per importare in automatico tutti i dipendenti per una convenzion caricando il file .CSV che ti è stato fornito.</span>
+  <hpm-drag-drop-zone
+    class="full-width"
+    [validExtensions]="['.csv']"
+    (fileAdded)="fileAdded($event)"></hpm-drag-drop-zone>
+  <mat-checkbox [(ngModel)]="overWrite" matTooltip="Selezionando questa opzione, i dipendenti già esistenti e non presenti nel file verranno rimossi dalla convenzione.">Sovrascrivi dipendenti</mat-checkbox>
+  <p *ngIf="hasError" class="warn-color">Errore nel caricamento del file. Riprovare.</p>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutGap="16px" fxLayoutAlign="space-between center">
+  <button mat-button color="primary" mat-dialog-close [disabled]="isLoading">Annulla</button>
+  <button mat-flat-button color="primary" [disabled]="!file || isLoading" (click)="upload()">
+    <span *ngIf="!isLoading">Carica</span>
+    <mat-spinner *ngIf="isLoading" color="primary" diameter="36"></mat-spinner>
+  </button>
+</mat-dialog-actions>

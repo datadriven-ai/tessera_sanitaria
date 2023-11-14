@@ -1,0 +1,101 @@
+<div fxLayoutAlign="space-between center">
+  <h3 mat-dialog-title class="title-color">{{ idCampaign? 'Modifica Campagna' : 'Nuova Campagna'}}</h3>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content fxLayoutGap="32px" [formGroup]="form">
+  <div fxFlex="40" fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo Sconto</mat-label>
+      <mat-select [disabled]="index === 1|| index === 2" formControlName="campaignType" (valueChange)="addFields($event)">
+        <mat-option value="STRATEGY">Applica Strategia</mat-option>
+        <mat-option value="VALUE">Sconto a valore</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" *ngIf="isStrategy">
+      <mat-label>Tipo strategia</mat-label>
+      <mat-select [disabled]="index === 1 || index === 2" formControlName="strategyId" (valueChange)="loadProducts()">
+        <mat-option *ngFor="let s of strategies" [value]="s.id">{{s.value}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div fxLayoutGap="16px" *ngIf="isValue">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Tipo sconto</mat-label>
+        <mat-select [disabled]="index === 1|| index === 2" formControlName="valueType">
+          <mat-option value="PERCENTAGE">Percentuale</mat-option>
+          <mat-option value="AMOUNT">Valore</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Valore sconto</mat-label>
+        <input [readonly]="index === 1|| index === 2" matInput formControlName="amount" type="number" min="1" [disabled]="index === 1">
+        <span matSuffix class="ml5">{{hasPercentageSelected ? ' %' : ' €'}}</span>
+      </mat-form-field>
+    </div>
+    <div fxLayoutGap="16px">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Nome</mat-label>
+        <input [readonly]="index === 1|| index === 2" matInput formControlName="code">
+      </mat-form-field>
+      <mat-form-field *ngIf="isAbleToConv" appearance="outline" fxFlex>
+        <mat-label>Convenzione</mat-label>
+        <mat-select [disabled]="index === 1|| index === 2" multiple formControlName="partners">
+          <mat-option [value]="partner" *ngFor="let partner of partners$ | async">{{partner.name | titlecase}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Descrizione</mat-label>
+      <input [readonly]="index === 1|| index === 2" matInput formControlName="description">
+    </mat-form-field>
+    <div fxLayoutGap="16px">
+      <mat-form-field appearance="outline" fxFlex="222px">
+        <mat-label>Inizio validità</mat-label>
+        <input [disabled]="index === 1|| index === 2" class="pointer"  matInput [matDatepicker]="picker"  formControlName="startDate" readonly [min]="minDate"  (click)="picker.open()">
+        <mat-datepicker-toggle
+          matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline"  fxFlex="222px">
+        <mat-label>Fine validità</mat-label>
+        <input [disabled]="index === 2" class="pointer"  matInput formControlName="endDate" readonly  [matDatepicker]="picker2" [min]="minDate" (click)="picker2.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </div>
+  </div>
+    <div class="item-area" fxFlex>
+      <mat-toolbar fxLayoutAlign="end" *ngIf="hasMultipleAgreementSelected">
+        <mat-form-field>
+          <mat-label>Convenzione</mat-label>
+          <mat-select [disabled]="index === 1|| index === 2">
+            <mat-option *ngFor="let partner of selectedAgreements"
+                        (click)="loadProducts(partner.channelId)"
+                        [value]="partner.channelId">{{partner.name | titlecase}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-toolbar>
+      <mat-list class="item-list">
+        <p *ngIf="selectedAgreements.length === 0; else list " class="centerText primary-color">Selezionare una convenzione.</p>
+        <ng-template #list>
+          <ng-container *ngFor="let item of catalog$ | async">
+            <h4 class="mt10 primary-color">{{item.category}}</h4>
+            <mat-list-item *ngFor="let p of item.products" fxLayoutAlign="space-between center">
+              <span fxFlex>{{p.name}}</span>
+              <div fxLayoutGap="8px">
+                <ng-container *ngIf="p.price !== getDiscountedPrice(p); else price">
+                  <span><strong> €{{getDiscountedPrice(p)| number:"1.2"}}</strong></span>
+                  <span class="darkLightText"><s>{{p.price |number:"1.2" }}</s></span>
+                </ng-container>
+                <ng-template #price>
+                  <span class="darkLightText">€{{p.price |number:"1.2" }}</span>
+                </ng-template>
+              </div>
+            </mat-list-item>
+          </ng-container>
+        </ng-template>
+      </mat-list>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end">
+  <button mat-flat-button color="primary" [disabled]="form.invalid || form.pristine" (click)="save()">{{ idCampaign? 'Modifica' : 'Crea'}} </button>
+</mat-dialog-actions>

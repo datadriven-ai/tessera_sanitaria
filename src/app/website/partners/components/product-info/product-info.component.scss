@@ -1,0 +1,27 @@
+mat-list-item::ng-deep.mat-list-item-content {
+  width: 100%;
+}
+
+p {
+  text-align: center;
+}
+
+.headers {
+  font-weight: bold;
+  padding: 0 16px;
+}
+
+.mat-list-base .mat-list-item {
+  height: auto;
+  //border-bottom: #8080803d 1px solid;
+}
+
+.products-container {
+  height: 700px;
+  max-height: 55vh;
+  overflow: auto;
+}
+
+mat-form-field {
+  font-size: 14px;
+}

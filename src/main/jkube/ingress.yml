@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: ${backoffice.hostname}
+      http:
+        paths:
+          - backend:
+              service:
+                name: ${project.artifactId}
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - ${backoffice.hostname}
+      secretName: mydigitalhealth-netsons-certs

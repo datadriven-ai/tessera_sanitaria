@@ -1,0 +1,8 @@
+<h2 mat-dialog-title class="primary-color">{{title}}</h2>
+<mat-dialog-content>
+  <p [innerHTML]="content"></p>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="space-between start">
+  <button mat-stroked-button mat-dialog-close>{{no}}</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">{{yes}}</button>
+</mat-dialog-actions>

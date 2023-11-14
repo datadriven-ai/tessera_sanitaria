@@ -1,0 +1,78 @@
+<div fxLayoutAlign="space-between center">
+  <h3 mat-dialog-title class="title-color"> {{data?.channelId ? 'Modifica' : 'Nuova' }} Convenzione</h3>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content [formGroup]="form"  fxLayout="column">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Denominazione</mat-label>
+    <input  [readonly]="hideName"  matInput formControlName="name">
+  </mat-form-field>
+
+  <div fxLayoutGap="16px">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Codice convenzione</mat-label>
+      <input matInput formControlName="conventionCode">
+    </mat-form-field>
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Tipologia</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="SEDE">In Loco</mat-option>
+        <mat-option value="ONLINE">Online</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+    <div fxLayoutGap="16px">
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Tipo registrazione</mat-label>
+        <mat-select formControlName="registrationType">
+          <mat-option value="NOR">Autonoma</mat-option>
+          <mat-option value="PRE">Pre-approvati</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex>
+        <mat-label>Tipo OTP</mat-label>
+        <mat-select formControlName="twoFactorAuthenticator">
+          <mat-option value="SMS">SMS</mat-option>
+          <mat-option value="EMAIL">Email</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  <div fxLayoutGap="16px">
+    <mat-form-field appearance="outline" fxFlex>
+      <mat-label>Inizio validità</mat-label>
+      <input class="pointer"  matInput [matDatepicker]="picker"  formControlName="start" readonly  (click)="picker.open()">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline"  fxFlex>
+      <mat-label>Fine validità</mat-label>
+      <input class="pointer" matInput formControlName="end" readonly  [matDatepicker]="picker2" (click)="picker2.open()">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  </div>
+    <div fxLayout="row" fxFlexOffset="16px">
+
+      <div fxLayout="column" fxFlex *ngIf="invalidDomains as invalidD">
+        <h4>Domini Vietati  <button mat-button color="primary" matTooltip="aggiungi" (click)="addInvalidDomain()"><mat-icon>add</mat-icon></button></h4>
+        <span *ngIf="invalidD.length === 0">-</span>
+        <ul *ngIf="invalidD.length > 0">
+          <li *ngFor="let inv of invalidD; let i = index"><button mat-icon-button (click)="removedInvalidDomain(i)"><mat-icon>clear</mat-icon></button><small>{{inv}}</small></li>
+        </ul>
+      </div>
+
+      <div fxLayout="column" fxFlex fxLayoutAlign="start start" *ngIf="validDomains as domains">
+        <h4>Domini permessi <button mat-button color="primary" matTooltip="aggiungi" (click)="addValidDomain()"><mat-icon>add</mat-icon></button></h4>
+        <span *ngIf="domains.length === 0">-</span>
+        <ul *ngIf="domains.length > 0">
+          <li *ngFor="let d of validDomains; let i = index"><button mat-icon-button (click)="removeValidDomain(i)"><mat-icon>clear</mat-icon></button><small>{{d}}</small></li>
+        </ul>
+      </div>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end">
+  <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="save()">{{data?.channelId ? 'Modifica' : 'Crea'}}</button>
+</mat-dialog-actions>

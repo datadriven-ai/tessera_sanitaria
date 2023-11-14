@@ -1,0 +1,34 @@
+<div fxLayout="column" fxLayoutAlign="start end">
+  <mat-card class="user-card relative" fxLayout="column" *ngIf="user">
+    <h5 mat-card-title class="primary-color">{{user.name | titlecase}} {{user.surname | titlecase}}</h5>
+    <small class="darkLightText"  fxLayoutAlign="start center">
+      <mat-icon>email</mat-icon>
+      <span class="overflow">{{user.email}}</span>
+    </small>
+    <small class="darkLightText" fxLayoutAlign="start center">
+      <mat-icon>phone</mat-icon>
+      <span>{{user.phoneNumber}}</span>
+    </small>
+    <small class="darkLightText textOverflow" fxLayoutAlign="start center" *ngIf="user.locations.length > 0" fxLayoutGap="4px" >
+      <mat-icon>home</mat-icon>
+      <span>{{user.locations[0].name}}</span>
+    </small>
+    <div  *ngIf="user.specializations !== null" fxLayout="row" fxLayoutAlign="start start" >
+      <small class="darkLightText"  fxLayoutAlign="start center">
+        <mat-icon>health_and_safety</mat-icon>
+        <span class="darkLightText specializationsLabel" [matTooltip]="user.specializations.length < 4 ? '': (user.specializations | separator: ', ' | titlecase)">
+          {{user.specializations.length < 4 ? (user.specializations | separator: ', ' | titlecase) : user.specializations.length + ' specializzazioni'}}
+        </span>
+      </small>
+    </div>
+    <div fxLayoutAlign="end start" class="conventionLabel" *ngIf="user.convention" style="line-height: 12px">
+      <small class="darkLightText" >{{user.convention}}</small>
+    </div>
+  </mat-card>
+  <div fxLayoutGap="8px" fxLayoutAlign="end start">
+    <button mat-mini-fab color="primary" class="mat-elevation-z0 grow-animation" *ngIf="isSecretary" matTooltip="Associa Medici" (click)="openSecretarySettings()"><mat-icon>manage_accounts</mat-icon></button>
+    <button mat-mini-fab color="primary" class="mat-elevation-z0 grow-animation"  matTooltip="Modifica" (click)="editClick.emit()" *ngIf="user?.canBeModified"><mat-icon>edit</mat-icon></button>
+    <button mat-mini-fab color="primary" class="mat-elevation-z0 grow-animation" matTooltip="Elimina" *ngIf="user?.canBeDeleted" (click)="deleteClick.emit()"><mat-icon>delete</mat-icon></button>
+  </div>
+</div>
+

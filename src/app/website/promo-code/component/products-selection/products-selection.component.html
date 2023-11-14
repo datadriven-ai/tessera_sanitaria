@@ -1,0 +1,37 @@
+<div fxLayoutAlign="center center">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+</div>
+<p *ngIf="catalog?.length === 0 && !isLoading" class="primary-color centerText">Non ci sono prodotti associabili.</p>
+<div class="products-container" *ngIf="!isLoading">
+  <mat-accordion *ngFor=" let cat of catalog" >
+    <mat-expansion-panel class="mat-elevation-z0" #accordion>
+      <mat-expansion-panel-header>
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-panel-title>
+            <mat-checkbox
+              [indeterminate]="itemsChecked(cat) < cat.products.length && itemsChecked(cat) > 0"
+              [checked]="itemsChecked(cat) === cat.products.length"
+              (click)="$event.stopImmediatePropagation()"
+              (change)="selectAll($event, cat.products)">{{cat.category}}</mat-checkbox>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{cat.products.length}} prodotti
+          </mat-panel-description>
+        </div>
+      </mat-expansion-panel-header>
+      <mat-selection-list [multiple]="false" *ngIf="accordion.opened">
+        <mat-list-option *ngFor="let pr of cat.products">
+          <div fxLayout="row" fxLayoutAlign="space-between center" class="pl5">
+            <mat-checkbox [checked]="isSelected(pr)" (change)="toggleProduct(pr, $event)">
+              {{pr.name}}
+            </mat-checkbox>
+            <div>
+              €{{pr.price |number:"1.2"}}
+            </div>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+

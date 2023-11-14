@@ -1,0 +1,59 @@
+<div id="menu" fxLayout="row"  fxLayoutGap="12px">
+  <a routerLink="/reservations">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>health_and_safety</mat-icon>
+      <span>Visite</span>
+    </span>
+    </button>
+  </a>
+  <a routerLink="/users">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>person_search</mat-icon>
+      <span>Utenti</span>
+    </span>
+    </button>
+  </a>
+  <a routerLink="/promotions">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>sell</mat-icon>
+      <span>Codici Promozionali</span>
+    </span>
+    </button>
+  </a>
+  <a routerLink="/campaigns">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>insights</mat-icon>
+      <span>Campagne</span>
+    </span>
+    </button>
+  </a>
+  <a routerLink="/partners">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>business</mat-icon>
+      <span>Convenzioni</span>
+    </span>
+    </button>
+  </a>
+  <a routerLink="/orders">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>format_list_bulleted</mat-icon>
+      <span>Ordini</span>
+    </span>
+    </button>
+  </a>
+
+  <a routerLink="/support" *ngIf="false">
+    <button mat-flat-button class="routerButton" routerLinkActive="active">
+    <span fxLayoutGap="8px" fxLayoutAlign="center center">
+      <mat-icon>format_list_bulleted</mat-icon>
+      <span>Assistenza</span>
+    </span>
+    </button>
+  </a>
+</div>

@@ -1,0 +1,28 @@
+<div fxLayoutAlign="space-between center">
+  <h3 mat-dialog-title class="primary-color">Catalogo prodotti</h3>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content>
+  <mat-tab-group animationDuration="0" class="regularTabGroup" [dynamicHeight]="true">
+    <mat-tab label="Prodotti Disponibili">
+      <hpb-products-selection
+        [isCatalog]="true"
+        [isLoading]="isLoading$ | async"
+        [catalog]="catalog$ | async"
+        [(selectionModel)]="selectedProducts"
+        (productSelected)="productChecked($event)"></hpb-products-selection>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span matBadge="{{selectedProducts.selected.length}}"> Personalizza </span>
+      </ng-template>
+      <hpb-product-info
+        [formArray]="productsFormArray"
+        (productRemoved)="removeProduct($event)"
+        (weightChanged)="sortControls()"></hpb-product-info>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end" *ngIf="! (isLoading$ | async)">
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="productsFormArray.invalid">Salva</button>
+</mat-dialog-actions>

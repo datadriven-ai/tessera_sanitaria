@@ -1,0 +1,115 @@
+<div fxLayoutAlign="space-between center">
+  <h3 mat-dialog-title class="primary-color">Emetti fattura</h3>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<mat-dialog-content fxLayout="row" [formGroup]="accountHolder" fxLayoutGap="32px">
+ <div fxLayout="column" fxLayoutGap.lt-sm="8px" fxLayoutAlign="start center" fxFlex="50">
+   <mat-form-field appearance="outline" class="full-width">
+     <mat-label>Natura Giuridica</mat-label>
+     <mat-select (valueChange)="changeHolderType($event)" [value]="accountHolder.value.accountHolderType">
+       <mat-option value="PF">Persona Fisica</mat-option>
+       <mat-option value="PG">Persona Giuridica</mat-option>
+     </mat-select>
+   </mat-form-field>
+   <ng-container *ngIf="isCompany; else isCustomer">
+     <mat-form-field appearance="outline" class="full-width">
+       <mat-label>Nome Azienda</mat-label>
+       <input matInput formControlName="companyName" required>
+     </mat-form-field>
+     <mat-form-field appearance="outline" class="full-width">
+       <mat-label>P. IVA</mat-label>
+       <input matInput formControlName="partitaIva" required>
+     </mat-form-field>
+   </ng-container>
+   <ng-template #isCustomer>
+     <div fxLayout="row" fxLayoutGap="16px" class="full-width">
+       <mat-form-field appearance="outline" fxFlex>
+         <mat-label>Nome</mat-label>
+         <input matInput formControlName="name" required>
+       </mat-form-field>
+       <mat-form-field appearance="outline" fxFlex>
+         <mat-label>Cognome</mat-label>
+         <input matInput formControlName="surname" required>
+       </mat-form-field>
+     </div>
+     <mat-form-field appearance="outline" class="full-width">
+       <mat-label>Codice Fiscale</mat-label>
+       <input matInput formControlName="fiscalCode" required>
+     </mat-form-field>
+   </ng-template>
+
+   <mat-form-field appearance="outline" class="full-width">
+     <mat-label>Email</mat-label>
+     <input matInput formControlName="email" required>
+   </mat-form-field>
+   <div class="full-width" fxLayoutGap="16px">
+     <mat-form-field appearance="outline" fxFlex>
+       <mat-label>Indirizzo</mat-label>
+       <input matInput formControlName="address" required>
+     </mat-form-field>
+     <mat-form-field appearance="outline"  fxFlex="200px">
+       <mat-label>Nazione</mat-label>
+       <input required placeholder="nazione" type="text"  [matAutocomplete]="auto2"  formControlName="nation" matInput>
+       <mat-autocomplete #auto2="matAutocomplete">
+         <mat-option *ngFor="let item of filteredNation$ | async" [value]="item.iso2">
+           {{item.description}}
+         </mat-option>
+       </mat-autocomplete>
+     </mat-form-field>
+   </div>
+   <div fxLayoutGap="16px" class="full-width">
+     <mat-form-field appearance="outline" fxFlex>
+       <mat-label>Città</mat-label>
+       <input placeholder="città" type="text"  [matAutocomplete]="auto"  formControlName="city" matInput>
+       <mat-autocomplete #auto="matAutocomplete">
+         <mat-option *ngFor="let item of filteredCities$ | async" [value]="item.city">
+           {{item.city}}
+         </mat-option>
+       </mat-autocomplete>
+     </mat-form-field>
+     <mat-form-field appearance="outline"  fxFlex="120px">
+       <mat-label>Provincia</mat-label>
+       <input placeholder="provincia" type="text"  [matAutocomplete]="auto3"  formControlName="province" matInput>
+       <mat-autocomplete #auto3="matAutocomplete">
+         <mat-option *ngFor="let item of filteredProvince$ | async" [value]="item.province">
+           {{item.city}}
+         </mat-option>
+       </mat-autocomplete>
+     </mat-form-field>
+     <mat-form-field appearance="outline"  fxFlex="100px">
+       <mat-label>CAP</mat-label>
+       <input matInput formControlName="cap" required>
+     </mat-form-field>
+   </div>
+   <mat-form-field appearance="outline" class="full-width">
+     <mat-label>Note</mat-label>
+     <textarea matInput formControlName="debtNote"></textarea>
+   </mat-form-field>
+ </div>
+  <div fxLayout="column" class="pl20" fxFlex fxLayoutGap="12px">
+    <h4 class="primary-color">Dati Ordine</h4>
+    <div fxLayoutAlign="space-between center"  *ngFor="let p of order.products">
+      <span>{{p.qty}} x {{p.description}}</span>
+      <span>{{p.amount | number:'1.2-2'}} €</span>
+    </div>
+    <div><mat-divider></mat-divider></div>
+    <div fxLayoutAlign="space-between center">
+      <strong>Sconto</strong>
+      <strong>{{order.totalDiscount | number:'1.2-2'}} €</strong>
+    </div>
+    <div fxLayoutAlign="space-between center">
+      <strong>IVA</strong>
+      <strong>{{order.totalVat | number:'1.2-2'}} €</strong>
+    </div>
+    <div fxLayoutAlign="space-between center">
+      <strong>Totale</strong>
+      <strong>{{order.totalAmount | number:'1.2-2'}} €</strong>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-flat-button color="primary" [disabled]="accountHolder.invalid || isLoading" (click)="generate()">
+    <ng-container *ngIf="isLoading"> <mat-spinner color="accent" [diameter]="25"></mat-spinner></ng-container>
+    <ng-container *ngIf="!isLoading">  Emetti fattura </ng-container>
+  </button>
+</mat-dialog-actions>

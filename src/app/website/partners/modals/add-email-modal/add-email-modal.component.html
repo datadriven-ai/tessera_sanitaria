@@ -1,0 +1,12 @@
+<h3 class="primary-color">Aggiungi dominio</h3>
+<mat-dialog-content fxLayout="column">
+  <mat-form-field appearance="outline">
+    <mat-label>Dominio</mat-label>
+    <input matInput placeholder="gmail.com" [formControl]="domain">
+    <span matPrefix class="darkLightText">@</span>
+  </mat-form-field>
+  <mat-dialog-actions fxLayoutGap="16px" fxLayoutAlign="space-between center">
+    <button mat-button color="primary" mat-dialog-close>Annulla</button>
+    <button mat-flat-button color="primary" [disabled]="domain.invalid" [mat-dialog-close]="domain.value">Conferma</button>
+  </mat-dialog-actions>
+</mat-dialog-content>

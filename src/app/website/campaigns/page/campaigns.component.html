@@ -1,0 +1,35 @@
+<div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+  <mat-tab-group animationDuration="0ms" ngClass.lt-md="mobile" fxFlex  class="absoluteTab" (selectedTabChange)="changeTab($event.index)">
+    <mat-tab [label]="t[1] | translateRole"  *ngFor="let t of tabs; let i= index" class="relative" [disabled]="isLoading$ | async">
+      <div fxLayoutAlign="center center" *ngIf="isLoading$ | async; else res" class="full-width">
+        <mat-spinner diameter="45"></mat-spinner>
+      </div>
+      <ng-template #res>
+        <p class="centerText primary-color" *ngIf="!(hasEntity$ | async)">Non ci sono codici.</p>
+        <div fxLayout="row wrap" fxLayoutGap="32px" class="card-container">
+          <hpb-campaign-card *ngFor="let c of data$ | async"
+                             [campaign]="c"
+                             [index]="i"
+                             (toggleClicked)="toggleEvent(c)"
+                             (editClicked)="openNewCampaignModal(c,i)"></hpb-campaign-card>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-paginator showFirstLastButtons
+                 *ngIf="pagination$ | async as p"
+                 [length]="p.totalElements"
+                 [pageIndex]="p.number"
+                 [pageSize]="10"
+                 (page)="updatePage($event)"></mat-paginator>
+  <button mat-flat-button color="primary" class="mt24" (click)="openNewCampaignModal()"><mat-icon>add</mat-icon>Nuova campagna</button>
+  <span fxFlex="2" class="red-line upper"></span>
+  <mat-form-field appearance="outline" id="searchBar" class="whiteBg form-no-margin mt24 mr5" fxFlex="300px">
+    <mat-label>Cerca</mat-label>
+    <input matInput [formControl]="searchControl">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <span fxFlex="3"></span>
+</div>
+
+

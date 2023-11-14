@@ -1,0 +1,54 @@
+<mat-dialog-content fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="12px">
+
+  <button mat-icon-button id="closeButton" mat-dialog-close>
+    <mat-icon>clear</mat-icon>
+  </button>
+  <strong class="primary-color">{{reservation.category}} - {{reservation.visitTitle}}</strong>
+  <div fxLayout="row" fxLayoutGap="8px" class="paid" [ngClass]="{'red': !isPaid}">
+    <mat-icon>{{isPaid ? 'check_circle' : 'highlight_off'}}</mat-icon>
+    <span> {{isPaid ? 'Pagato' : 'Non pagato'}}</span>
+  </div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>event_note</mat-icon>
+    <span> {{reservation.visitStart}}</span>
+  </div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>schedule</mat-icon>
+    <span> {{reservation.visitStart}} ({{duration}} minuti circa)</span>
+  </div>
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+  <strong class="primary-color">Paziente</strong>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>person_outline</mat-icon>
+    <span>{{reservation.user.name}} {{reservation.user.surname}}</span>
+  </div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>assignment_ind</mat-icon>
+    <span>{{reservation.user.fiscalCode}}</span>
+  </div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>email</mat-icon>
+    <span>{{reservation.user.email}}</span>
+  </div>
+  <div>
+    <mat-divider></mat-divider>
+  </div>
+  <strong class="primary-color">Medico</strong>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>person_outline</mat-icon>
+    <span>{{reservation.medic.name}} {{reservation.medic.surname}}</span>
+  </div>
+  <div fxLayout="row" fxLayoutGap="8px">
+    <mat-icon>email</mat-icon>
+    <span>{{reservation.medic.email}} </span>
+  </div>
+  <span fxFlex></span>
+  <p class="primary-color" *ngIf="error">{{error}}</p>
+  <mat-dialog-actions fxLayoutGap="12px" fxLayout="column" *ngIf="isEditable" fxLayoutAlign="center center">
+    <button mat-flat-button color="primary" class="full-width" (click)="modifyBooking()">Modifica orario</button>
+    <button [matTooltip]="reservation.notificationMsg" [disabled]="!reservation.cancellable" mat-stroked-button mat-dialog-close class="full-width" id="cancelBoooking" (click)="cancelBooking()">Cancella prenotazione</button>
+  </mat-dialog-actions>
+</mat-dialog-content>
+

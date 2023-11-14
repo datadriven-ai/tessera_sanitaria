@@ -1,0 +1,50 @@
+mat-dialog-content {
+  min-height: 550px;
+  min-width: 400px;
+  overflow: unset;
+}
+
+.booking-image {
+  background-image: url('/assets/images/reservations/cardiologia.png');
+  background-size: cover;
+  border-radius: 16px 0 0 16px;
+  width: 400px;
+}
+
+h2 {
+  margin-top: 0 !important;
+}
+
+#closeButton {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+mat-dialog-actions {
+  width: 350px;
+}
+
+#startVideocall {
+  min-width: 130px;
+  min-height: 36px;
+}
+
+.documentText {
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.paid {
+  color: green;
+}
+
+.paid.red {
+  color: red;
+}
+
+
+.mat-dialog-actions .mat-button-base + .mat-button-base{
+  margin-left: 0;
+}

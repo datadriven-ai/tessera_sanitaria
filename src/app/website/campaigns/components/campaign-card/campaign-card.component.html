@@ -1,0 +1,30 @@
+<div fxLayout="column" fxLayoutAlign="start end" *ngIf="campaign">
+<mat-card  class="campaign-card">
+  <mat-card-content fxLayout="column">
+    <div fxLayoutAlign="space-between start" class="darkLightText">
+      <h4 class="primary-color">{{campaign.code}} </h4>
+      <small class="darkLightText" *ngIf="!campaign.strategyId"> {{campaign.valueType === 'AMOUNT' ? '€' : '%'}} {{campaign.value}}</small>
+    </div>
+    <small>{{campaign.startDate}} - {{campaign.endDate}}</small>
+    <span fxFlexOffset="8px">{{campaign.description}}</span>
+  </mat-card-content>
+</mat-card>
+  <div fxLayoutAlign="end start" fxLayoutGap="12px">
+    <button mat-mini-fab color="primary" class="mat-elevation-z0 grow-animation" [matMenuTriggerFor]="menu"><mat-icon>settings</mat-icon></button>
+  </div>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="editClicked.emit()">
+      <mat-icon>edit</mat-icon>
+      <span>Modifica</span>
+    </button>
+    <button [disabled]="index === 2" mat-menu-item (click)="toggleClicked.emit()" *ngIf="campaign">
+      <mat-icon>{{campaign.isInterrupted ? 'play_arrow' : 'pause'}}</mat-icon>
+      <span>{{campaign.isInterrupted ? 'Avvia Campagna' : 'Interrompi Campagna'}}</span>
+    </button>
+    <button mat-menu-item (click)="deleteCampaign(campaign)" *ngIf="campaign">
+      <mat-icon>delete</mat-icon>
+      <span>Elimina</span>
+    </button>
+  </mat-menu>
+</div>
+

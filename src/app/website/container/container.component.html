@@ -1,0 +1,22 @@
+<mat-toolbar id="toolbar" fxLayoutGap="4px">
+  <img src="/assets/images/logo.png" alt="Logo">
+  <img src="/assets/images/titleLogo.png"  alt="hp_logo">
+  <span fxFlex></span>
+  <button mat-button routerLink="login" (click)="logout()">Logout</button>
+</mat-toolbar>
+<mat-drawer-container [hasBackdrop]="false">
+  <mat-drawer mode="over" position="end" #drawer [autoFocus]="false">
+    <div fxLayoutAlign="center center" clasS="full-height">
+      <hpb-report-card (closeEvent)="drawer.close()"></hpb-report-card>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content fxLayout="column">
+    <mat-card class="drawer-zone mat-elevation-z0" fxLayoutAlign="center center">
+      <button mat-button (click)="drawer.toggle()"><mat-icon>chevron_left</mat-icon></button>
+    </mat-card>
+    <hpb-menu></hpb-menu>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
+

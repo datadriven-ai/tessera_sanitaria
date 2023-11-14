@@ -1,0 +1,23 @@
+#menu {
+  padding: 0 3%;
+  margin-bottom: 32px;
+}
+
+.routerButton {
+  height: 50px;
+  min-width: 120px;
+  font-size: 18px;
+  border: 1px solid #80808042;
+  background-color: #09102b;
+  color: white;
+}
+
+button.mat-flat-button {
+  border-radius: 0 0 16px 16px;
+}
+
+.routerButton.active {
+  background-color: white;
+  color: black;
+  border: 1px solid #91211e;
+}

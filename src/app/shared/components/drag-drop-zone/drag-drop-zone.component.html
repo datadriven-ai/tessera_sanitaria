@@ -1,0 +1,8 @@
+<div class="uploadfilecontainer" (click)="fileInput.click()" dragDrop (onFileDropped)="uploadFile($event)" fxLayoutAlign="center center">
+  <input hidden type="file" #fileInput (change)="uploadClickFile($event.target)" accept=".csv">
+  <p class="centerText darkLightText" *ngIf="!file">Clicca quì per caricare un file <br> oppurre trascinalo con il mouse in quest'area.</p>
+  <div class="centerText"  *ngIf="file" fxLayout="column" fxLayoutAlign="center center">
+    <mat-icon>description</mat-icon>
+    <span>{{file.name}}</span>
+  </div>
+</div>

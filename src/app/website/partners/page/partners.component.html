@@ -1,0 +1,30 @@
+<div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="start center" class="relative">
+  <span fxFlex class="red-line"></span>
+  <button mat-flat-button color="primary" (click)="openDialog()"><mat-icon>add</mat-icon> Nuova convenzione</button>
+  <span fxFlex="4" class="red-line"></span>
+  <mat-form-field appearance="outline" id="searchBar" class="whiteBg form-no-margin" fxFlex="300px">
+    <mat-label>Cerca</mat-label>
+    <input matInput [formControl]="searchControl">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <span fxFlex="3"></span>
+</div>
+<div fxLayoutAlign="center center" *ngIf="isLoading$ | async; else partners" class="full-width">
+  <mat-spinner diameter="45"></mat-spinner>
+</div>
+<ng-template #partners>
+  <p class="centerText primary-color" *ngIf="!(hasEntity$ | async)">Non ci sono convenzioni.</p>
+  <div fxLayout="row wrap" fxLayoutGap="32px" class="card-container">
+    <hpb-partner-card *ngFor="let p of data$ | async"
+                      [partner]="p"
+                      (openCatalog)="openCatalog(p)"
+                      (editClicked)="openDialog(p)"
+                      (importClicked)="importUsers(p)"></hpb-partner-card>
+  </div>
+  <mat-paginator showFirstLastButtons
+                 *ngIf="pagination$ | async as p"
+                 [pageIndex]="p.number"
+                 [length]="p.totalElements"
+                 [pageSize]="10"
+                 (page)="updatePage($event)"></mat-paginator>
+</ng-template>

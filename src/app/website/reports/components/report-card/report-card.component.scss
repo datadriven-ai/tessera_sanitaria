@@ -1,0 +1,46 @@
+h4 {
+  margin: 8px 0
+}
+
+.mat-card mat-divider.mat-divider-horizontal {
+  left: 10%;
+  width: 90%;
+}
+
+.report-card {
+  height: 80vh;
+  width: 340px;
+  border-radius: 24px 0 0 24px;
+  margin-left: 32px;
+  padding-left: 40px;
+  padding-right: 8px;
+}
+
+.downloadBox {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 4px;
+  background-color: #F5F5F5;
+  margin-top: 12px;
+  height: 36px;
+}
+
+#closeButton {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.mat-dialog-title {
+  font-size: 32px !important;
+  margin: 0;
+  font-weight: 400;
+}
+
+.box {
+  inline-size: 300px;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}

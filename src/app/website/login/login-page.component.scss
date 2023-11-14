@@ -1,0 +1,47 @@
+:host {
+  height: 100%;
+}
+
+#login {
+  padding: 0;
+  width: 850px;
+  height: 500px;
+}
+
+mat-card h3 {
+  font-size: 22px;
+}
+
+mat-card-title {
+  font-size: 22px !important;
+  letter-spacing: 0;
+  margin-top: 32px !important;
+}
+
+mat-card-content {
+  margin-bottom: 0;
+  color: #72767b;
+  font-size: 14px;
+}
+
+.right-card-section {
+  padding: 32px;
+}
+
+.left-card-section {
+  background-image: url("/assets/images/left-card-login.png");
+  background-position-x: 147%;
+  background-position-y: 60px;
+  background-size: 260px;
+  background-repeat: no-repeat;
+  background-color: #f8f8f8;
+  border-radius: 24px 0 0 24px;
+  padding: 16px;
+}
+
+.mdh-logo {
+  max-width: 80%;
+  margin-top: 2px;
+  margin-left: 2px;
+  height: 40px;
+}

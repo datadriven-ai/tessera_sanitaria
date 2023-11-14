@@ -1,0 +1,33 @@
+<div fxLayout="row" fxLayoutGap="8px" fxLayoutAlign="center start">
+  <mat-tab-group animationDuration="0ms" ngClass.lt-md="mobile" fxFlex  class="absoluteTab" (selectedTabChange)="changeTab($event.index)">
+    <mat-tab [label]="t"  *ngFor="let t of tabs" class="relative">
+      <div fxLayoutAlign="center center" *ngIf="isLoading$ | async; else res" class="full-width">
+        <mat-spinner diameter="45"></mat-spinner>
+      </div>
+      <ng-template #res>
+        <p class="centerText primary-color" *ngIf="!(hasEntity$ | async)">Non ci sono codici.</p>
+        <div fxLayout="row wrap" fxLayoutGap="16px" class="card-container" fxLayoutAlign="start start">
+          <hpb-promo-card *ngFor="let promo of data$ | async"
+                          [promoCode]="promo"
+                          (editClicked)="openNewCodeModal(promo)"></hpb-promo-card>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <mat-paginator showFirstLastButtons #paginator
+                 *ngIf="pagination$ | async as p"
+                 [length]="p.totalElements"
+                 [pageIndex]="p.number"
+                 [pageSize]="10"
+                 (page)="updatePage($event)"></mat-paginator>
+  <button mat-flat-button color="primary" class="mt24" (click)="openNewCodeModal()"><mat-icon>add</mat-icon>Nuovo codice</button>
+  <span fxFlex="2" class="red-line upper"></span>
+  <mat-form-field appearance="outline" id="searchBar" class="whiteBg form-no-margin mt24" fxFlex="300px">
+    <mat-label>Cerca</mat-label>
+    <input matInput [formControl]="searchControl">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+  <span fxFlex="3"></span>
+</div>
+
+

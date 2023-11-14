@@ -1,0 +1,91 @@
+<div fxLayoutAlign="space-between center">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 mat-dialog-title class="title-color">Modifica Utente</h3>
+  </div>
+  <button mat-icon-button id="closeDialogButton" mat-dialog-close><mat-icon>clear</mat-icon></button>
+</div>
+<div *ngIf="isLoadingPage" fxLayout="row" fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</div>
+<mat-dialog-content *ngIf="!isLoadingPage" [formGroup]="userForm" fxLayout="column" fxLayoutGap.lt-sm="8px" fxLayoutAlign="start center">
+  <div fxLayoutGap="32px" fxLayout="row wrap" fxLayoutGap.lt-sm="0">
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input readonly matInput formControlName="name" required>
+    </mat-form-field>
+    <mat-form-field appearance="outline" >
+      <mat-label>Cognome</mat-label>
+      <input readonly matInput formControlName="surname" required>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="32px" fxLayout="row wrap" fxLayoutGap.lt-sm="0">
+    <div fxLayoutAlign="space-between" fxFlex="355px" >
+      <mat-form-field appearance="outline" fxFlex="145px">
+        <mat-label>Sesso</mat-label>
+        <mat-select [disabled]="true" formControlName="gender" required>
+          <mat-option value="M">Maschio</mat-option>
+          <mat-option value="F">Femmina</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="190px">
+        <mat-label>Data di Nascita</mat-label>
+        <input matInput [disabled]="true" [matDatepicker]="picker" formControlName="birthDate" readonly class="pointer" (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker startView="multi-year"></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Città di Nascita</mat-label>
+      <input readonly matInput type="text" formControlName="birthPlace" [matAutocomplete]="auto" required>
+      <mat-autocomplete [disableRipple]="true" #auto="matAutocomplete">
+        <mat-option *ngFor="let item of filteredCities$ | async" [value]="item.city">
+          {{item.city}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="32px" fxLayoutGap.lt-sm="8px">
+    <mat-form-field appearance="outline">
+      <mat-label>Codice Fiscale</mat-label>
+      <input readonly matInput  formControlName="fiscalCode">
+      <button [disabled]="true" class="primary-color"
+              mat-stroked-button matSuffix
+              id='calculateButton'
+              type="button"
+              (click)="$event.stopImmediatePropagation(); calculateFiscalCode()">calcola</button>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput  formControlName="email" required>
+    </mat-form-field>
+  </div>
+  <div fxLayoutGap="32px" fxLayout="row wrap" fxLayoutGap.lt-sm="0">
+
+    <div fxLayoutAlign="space-between" fxFlex="355px">
+      <mat-form-field appearance="outline" fxFlex="145px">
+        <mat-label>Prefisso</mat-label>
+        <mat-select formControlName="phonePrefix" placeholder="+39">
+          <mat-option *ngFor="let country of phonePrefixes$ | async" [value]="country.dial_code">
+            {{ country.name }} ({{ country.dial_code }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="185px">
+        <mat-label>Numero di Telefono</mat-label>
+        <input type="number" matInput formControlName="phoneNumber" required>
+      </mat-form-field>
+    </div>
+    <mat-form-field appearance="outline" >
+      <mat-label>Convenzione</mat-label>
+      <mat-select formControlName="convention">
+        <mat-option *ngFor="let convention of this.conventions" [value]="convention.id">{{convention.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions fxLayoutAlign="end">
+  <button (click)="modifyUser()" mat-flat-button color="primary">
+    <ng-container *ngIf="isLoading"> <mat-spinner color="accent" [diameter]="25"></mat-spinner></ng-container>
+    <ng-container *ngIf="!isLoading">Modifica</ng-container>
+  </button>
+</mat-dialog-actions>
